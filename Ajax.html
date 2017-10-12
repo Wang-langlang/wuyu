@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+        }
+        ul{
+            list-style: none;
+        }
+        .t{
+            width: 300px;
+            border: 1px solid #8b8388;
+        }
+        .box{
+            width: 500px;
+            margin: 100px auto;
+        }
+        input{
+            width: 300px;
+            height: 28px;
+            border: 1px  solid #2029ff;
+            float: left;
+        }
+        button{
+            width: 100px;
+            height: 30px;
+            border: none;
+            color:#fff;
+            background: #2029ff;
+            float: left;
+        }
+        div{
+            clear: both;
+        }
+        li{
+            width: 300px;
+            height: 30px;
+            line-height: 30px;
+            cursor: pointer;
+        }
+        li:hover{
+            background: rgba(0, 0, 0, 0.05);
+        }
+    </style>
+</head>
+<body>
+<div class="box">
+    <input type="text"/><button>百度一下</button>
+    <div></div>
+    <ul class="t">
+    </ul>
+</div>
+</body>
+<script src="https://cdn.bootcss.com/jquery/1.12.4/jquery.min.js"></script>
+<script>
+  $(function(){
+      $('input').on('keyup',function(){
+          var txt=$(this).val();
+          $.ajax({
+              url:'https://sp0.baidu.com/5a1Fazu8AA54nxGko9WTAnF6hhy/su?',
+              type:'get',
+              data:{
+                  wd:txt
+              },
+              dataType:'jsonp',
+              jsonp:'cb',
+              success:function(data){
+                  var src='';
+                  if(src=''){
+                      $('ul').removeClass('.t');
+                  }else{
+                      $('ul').addClass('.t')
+                  }
+                  for(var i=0;i<data.s.length;i++){
+                      src+='<li>'+data.s[i]+'</li>'
+                  }$('ul').html(src);
+              },
+              error:function(){
+                  alert('请求失败')
+              }
+          })
+      })
+
+
+
+  })
+
+</script>
+</html>
